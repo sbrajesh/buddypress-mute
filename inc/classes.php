@@ -54,9 +54,9 @@ class Mute {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @param int $muted_id The ID of the user to be muted.
-     * @param int $user_id The ID of the user initiating the mute request.
+	 *
+	 * @param int $muted_id The ID of the user to be muted.
+	 * @param int $user_id The ID of the user initiating the mute request.
 	 */
 	function __construct( $muted_id = '', $user_id = '' ) {
 
@@ -71,9 +71,9 @@ class Mute {
 	 *
 	 * @since 1.0.0
 	 * @access protected
-     *
-     * @param int $muted_id The ID of the user to be muted.
-     * @param int $user_id The ID of the user initiating the mute request.
+	 *
+	 * @param int $muted_id The ID of the user to be muted.
+	 * @param int $user_id The ID of the user initiating the mute request.
 	 */
 	protected function populate( $muted_id, $user_id ) {
 
@@ -97,8 +97,8 @@ class Mute {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @return int|bool The number of rows affected or false if an error occurred.
+	 *
+	 * @return int|bool The number of rows affected or false if an error occurred.
 	 */
 	function save() {
 
@@ -120,8 +120,8 @@ class Mute {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @return int|bool The number of rows affected or false if an error occurred.
+	 *
+	 * @return int|bool The number of rows affected or false if an error occurred.
 	 */
 	function delete() {
 
@@ -137,9 +137,9 @@ class Mute {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @param int $user_id The ID of the user doing the muting.
-     * @return array
+	 *
+	 * @param int $user_id The ID of the user doing the muting.
+	 * @return array
 	 */
 	static function get_muting( $user_id ) {
 
@@ -153,9 +153,9 @@ class Mute {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @param int $user_id The user ID to fetch the count for.
-     * @return int
+	 *
+	 * @param int $user_id The user ID to fetch the count for.
+	 * @return int
 	 */
 	static function get_count( $user_id ) {
 
@@ -169,9 +169,9 @@ class Mute {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @param int $user_id The ID of the user.
-     * @return int|bool The number of rows affected or false if an error occurred.
+	 *
+	 * @param int $user_id The ID of the user.
+	 * @return int|bool The number of rows affected or false if an error occurred.
 	 */
 	static function delete_all( $user_id ) {
 
