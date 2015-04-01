@@ -18,10 +18,10 @@ if ( ! defined( 'ABSPATH' ) )
 function bp_mute_all_screen() {
 
 	/**
-     * Fires before loading the 'all' screen template.
-     *
-     * @since 1.0.0
-     */
+	 * Fires before loading the 'all' screen template.
+	 *
+	 * @since 1.0.0
+	 */
 	do_action( 'bp_mute_all_screen' );
 
 	bp_core_load_template( 'members/single/plugins' );
@@ -35,10 +35,10 @@ function bp_mute_all_screen() {
 function bp_mute_friends_screen() {
 
 	/**
-     * Fires before loading the 'friends' screen template.
-     *
-     * @since 1.0.0
-     */
+	 * Fires before loading the 'friends' screen template.
+	 *
+	 * @since 1.0.0
+	 */
 	do_action( 'bp_mute_friends_screen' );
 
 	bp_core_load_template( 'members/single/plugins' );
