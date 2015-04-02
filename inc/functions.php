@@ -203,8 +203,8 @@ function bp_mute_filter_activity( $r ) {
 	$ids = Mute::get_muting( bp_loggedin_user_id() );
 
 	$args = array(
-		'exclude'	=> $ids,
-		'fields'	=> 'ID'
+		'exclude' => $ids,
+		'fields' => 'ID'
 	);
 
 	$r['user_id'] = get_users( $args );
