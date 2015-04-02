@@ -1,7 +1,7 @@
 === BuddyPress Mute ===
 Contributors: henry.wright
 Donate link: https://www.bhf.org.uk/get-involved/donate
-Tags: buddypress, mute
+Tags: buddypress, mute, activity, feed, users, friends
 Requires at least: 3.5
 Tested up to: 4.1.1
 Stable tag: 1.0.0
