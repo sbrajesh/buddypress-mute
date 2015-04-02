@@ -29,31 +29,31 @@ function bp_mute_get_button( $muted_id ) {
 
 		$actionurl = bp_core_get_user_domain( $muted_id ) . $bp->mute->slug . '/stop/';
 
-		$button['id']				= 'muted';
-		$button['link_href']		= wp_nonce_url( $actionurl, 'unmute' );
-		$button['link_class']		= 'muted';
-		$button['link_id']			= 'mute-' . $muted_id;
-		$button['link_title']		= _x( 'Unmute', 'Button', 'buddypress-mute' );
-		$button['link_text']		= _x( 'Unmute', 'Button', 'buddypress-mute' );
-		$button['wrapper_class']	= 'mute-button';
+		$button['id'] = 'muted';
+		$button['link_href'] = wp_nonce_url( $actionurl, 'unmute' );
+		$button['link_class'] = 'muted';
+		$button['link_id'] = 'mute-' . $muted_id;
+		$button['link_title'] = _x( 'Unmute', 'Button', 'buddypress-mute' );
+		$button['link_text'] = _x( 'Unmute', 'Button', 'buddypress-mute' );
+		$button['wrapper_class'] = 'mute-button';
 
 	} else {
 
 		$actionurl = bp_core_get_user_domain( $muted_id ) . $bp->mute->slug . '/start/';
 
-		$button['id']				= 'unmuted';
-		$button['link_href']		= wp_nonce_url( $actionurl, 'mute' );
-		$button['link_class']		= 'unmuted';
-		$button['link_id']			= 'mute-' . $muted_id;
-		$button['link_title']		= _x( 'Mute', 'Button', 'buddypress-mute' );
-		$button['link_text']		= _x( 'Mute', 'Button', 'buddypress-mute' );
-		$button['wrapper_class']	= 'mute-button';
+		$button['id'] = 'unmuted';
+		$button['link_href'] = wp_nonce_url( $actionurl, 'mute' );
+		$button['link_class'] = 'unmuted';
+		$button['link_id'] = 'mute-' . $muted_id;
+		$button['link_title'] = _x( 'Mute', 'Button', 'buddypress-mute' );
+		$button['link_text'] = _x( 'Mute', 'Button', 'buddypress-mute' );
+		$button['wrapper_class'] = 'mute-button';
 	}
 
-	$button['component']			= 'mute';
-	$button['wrapper_id']			= 'mute-button-' . $muted_id;
-	$button['must_be_logged_in']	= true;
-	$button['block_self']			= true;
+	$button['component'] = 'mute';
+	$button['wrapper_id'] = 'mute-button-' . $muted_id;
+	$button['must_be_logged_in'] = true;
+	$button['block_self'] = true;
 
 	return bp_get_button( $button );
 }

@@ -39,8 +39,8 @@ class Mute_Component extends BP_Component {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @param array $includes See BP_Component::includes() for a description.
+	 *
+	 * @param array $includes See BP_Component::includes() for a description.
 	 */
 	function includes( $includes = array() ) {
 
@@ -60,8 +60,8 @@ class Mute_Component extends BP_Component {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @param array $args See BP_Component::setup_globals() for a description.
+	 *
+	 * @param array $args See BP_Component::setup_globals() for a description.
 	 */
 	function setup_globals( $args = array() ) {
 
@@ -87,9 +87,9 @@ class Mute_Component extends BP_Component {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @param array $main_nav Optional. See BP_Component::setup_nav() for a description.
-     * @param array $sub_nav Optional. See BP_Component::setup_nav() for a description.
+	 *
+	 * @param array $main_nav Optional. See BP_Component::setup_nav() for a description.
+	 * @param array $sub_nav Optional. See BP_Component::setup_nav() for a description.
 	 */
 	function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
@@ -154,8 +154,8 @@ class Mute_Component extends BP_Component {
 	 *
 	 * @since 1.0.0
 	 * @access public
-     *
-     * @param array $wp_admin_nav See BP_Component::setup_admin_bar() for a description.
+	 *
+	 * @param array $wp_admin_nav See BP_Component::setup_admin_bar() for a description.
 	 */
 	function setup_admin_bar( $wp_admin_nav = array() ) {
 
