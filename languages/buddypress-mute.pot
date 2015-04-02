@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BuddyPress Mute\n"
+"POT-Creation-Date: 2015-04-02 11:32+0100\n"
+"PO-Revision-Date: 2015-04-02 11:35+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: __;_e;_x\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: buddypress-mute.php:104
+msgid "BuddyPress Mute requires BuddyPress version 1.7 or higher."
+msgstr ""
+
+#: inc/loader.php:30 inc/loader.php:106 inc/functions.php:48
+#: inc/functions.php:49
+msgid "Mute"
+msgstr ""
+
+#: inc/loader.php:102
+#, php-format
+msgid "Mute <span class=\"%s\">%s</span>"
+msgstr ""
+
+#: inc/loader.php:130 inc/loader.php:174
+msgid "All"
+msgstr ""
+
+#: inc/loader.php:140 inc/loader.php:181
+msgid "Friends"
+msgstr ""
+
+#: inc/functions.php:36 inc/functions.php:37
+msgid "Unmute"
+msgstr ""
+
+#: inc/functions.php:133
+#, php-format
+msgid "You are already muting %s."
+msgstr ""
+
+#: inc/functions.php:141 inc/functions.php:182
+msgid "An error occurred, please try again."
+msgstr ""
+
+#: inc/functions.php:145
+#, php-format
+msgid "You are now muting %s."
+msgstr ""
+
+#: inc/functions.php:174
+#, php-format
+msgid "You are not muting %s."
+msgstr ""
+
+#: inc/functions.php:186
+#, php-format
+msgid "You have successfully unmuted %s."
+msgstr ""
