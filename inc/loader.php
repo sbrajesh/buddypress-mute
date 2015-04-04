@@ -48,8 +48,7 @@ class Mute_Component extends BP_Component {
 			'inc/classes.php',
 			'inc/functions.php',
 			'inc/screens.php',
-			'inc/ajax.php',
-			'inc/template.php'
+			'inc/ajax.php'
 		);
 
 		parent::includes( $includes );
