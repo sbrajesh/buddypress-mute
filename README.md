@@ -1,15 +1,8 @@
 # BuddyPress Mute
 
-There are many reasons why you might want to mute a friend. A couple that spring to mind are:
+There are many reasons why you might want to mute a person. A friend could be posting too many promotional messages or a former colleague might be regularly talking about work projects. In many of these situations, blocking or unfriending aren't appropriate solutions because you don't want to dissociate yourself from that person.
 
- - A friend has been posting too many promotional messages.
- - A former colleague always talks about work projects.
-
-In many of these situations, blocking or unfriending aren't appropriate solutions because you don't want to dissociate yourself from that person.
-
-## Screenshots
-
-To be added.
+BuddyPress Mute outputs a button next to each member which, when clicked, results in that member being muted. Members can be unmuted at any time. The button uses Ajax to make the muting and unmuting process seamless.
 
 ## Requirements
 
