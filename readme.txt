@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-Allow members to mute their friends and shed unwanted items from their BuddyPress activity stream.
+Allow members to mute their friends and shed unwanted items from their BuddyPress site-wide activity stream.
 
 == Description ==
 
@@ -22,6 +22,10 @@ BuddyPress Mute outputs a button next to each member which, when clicked, result
 1. Enjoy!
 
 == Frequently Asked Questions ==
+
+= Will I continue to get notifications from people after I mute them? =
+
+Yes. If for instance a person you are muting decides to send you a private message, then you will receive a notification.
 
 = How can I mute a person? =
 
