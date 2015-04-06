@@ -229,6 +229,10 @@ add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_site_activity_filter'
  */
 function bp_mute_friends_activity_scope( $retval = array(), $filter = array() ) {
 
+	if ( ! bp_is_active( 'friends' ) ) {
+		return $retval;
+	}
+
 	if ( ! empty( $filter['user_id'] ) ) {
 
 		$user_id = $filter['user_id'];
@@ -284,6 +288,10 @@ add_filter( 'bp_activity_set_friends_scope_args', 'bp_mute_friends_activity_scop
  * @since 1.0.0
  */
 function bp_mute_filter_members_friends( $r ) {
+
+	if ( ! bp_is_active( 'friends' ) ) {
+		return $r;
+	}
 
 	if ( bp_is_current_component( 'mute' ) && bp_is_current_action( 'friends' ) ) {
 

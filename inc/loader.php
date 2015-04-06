@@ -135,15 +135,18 @@ class Mute_Component extends BP_Component {
 			'screen_function' => 'bp_mute_all_screen'
 		);
 
-		$sub_nav[] = array(
-			'name' => __( 'Friends', 'buddypress-mute' ),
-			'slug' => 'friends',
-			'parent_slug' => $this->slug,
-			'parent_url' => $mute_link,
-			'position' => 20,
-			'user_has_access' => bp_core_can_edit_settings(),
-			'screen_function' => 'bp_mute_friends_screen'
-		);
+		if ( bp_is_active( 'friends' ) ) {
+
+			$sub_nav[] = array(
+				'name' => __( 'Friends', 'buddypress-mute' ),
+				'slug' => 'friends',
+				'parent_slug' => $this->slug,
+				'parent_url' => $mute_link,
+				'position' => 20,
+				'user_has_access' => bp_core_can_edit_settings(),
+				'screen_function' => 'bp_mute_friends_screen'
+			);
+		}
 
 		parent::setup_nav( $main_nav, $sub_nav );
 	}
@@ -176,12 +179,15 @@ class Mute_Component extends BP_Component {
 			'href' => trailingslashit( trailingslashit( bp_loggedin_user_domain() . $this->slug ) . 'all' ),
 		);
 
-		$wp_admin_nav[] = array(
-			'title' => __( 'Friends', 'buddypress-mute' ),
-			'id' => 'my-account-' . $this->id . '-friends',
-			'parent' => 'my-account-' . $this->id,
-			'href' => trailingslashit( trailingslashit( bp_loggedin_user_domain() . $this->slug ) . 'friends' ),
-		);
+		if ( bp_is_active( 'friends' ) ) {
+
+			$wp_admin_nav[] = array(
+				'title' => __( 'Friends', 'buddypress-mute' ),
+				'id' => 'my-account-' . $this->id . '-friends',
+				'parent' => 'my-account-' . $this->id,
+				'href' => trailingslashit( trailingslashit( bp_loggedin_user_domain() . $this->slug ) . 'friends' ),
+			);
+		}
 
 		parent::setup_admin_bar( $wp_admin_nav );
 	}
