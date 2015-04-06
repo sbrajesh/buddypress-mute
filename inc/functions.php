@@ -192,26 +192,91 @@ function bp_mute_action_stop() {
 add_action( 'bp_actions', 'bp_mute_action_stop' );
 
 /**
- * Filter the activity loop to show items from unmuted users only.
+ * Filter All Members in the activity directory.
  *
- * @since 1.0.0
+ * @since 1.0.1
  *
+ * @param array $args Arguments passed from bp_parse_args().
  * @return array
  */
-function bp_mute_filter_activity( $r ) {
+function bp_mute_site_activity_filter( $args ) {
+
+	if ( ! is_user_logged_in() || ! bp_is_activity_directory() || ! empty( $args['scope'] ) ) {
+		return $args;
+	}
 
 	$ids = Mute::get_muting( bp_loggedin_user_id() );
 
-	$args = array(
+	$query_args = array(
 		'exclude' => $ids,
 		'fields' => 'ID'
 	);
 
-	$r['user_id'] = get_users( $args );
+	$args['user_id'] = get_users( $query_args );
 
-	return $r;
+	return $args;
 }
-add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_filter_activity' );
+add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_site_activity_filter' );
+
+/**
+ * Filter My Friends in the activity directory.
+ *
+ * @since 1.0.1
+ *
+ * @param array $retval Empty array by default.
+ * @param array $filter Current activity arguments.
+ * @return array
+ */
+function bp_mute_friends_activity_scope( $retval = array(), $filter = array() ) {
+
+	if ( ! empty( $filter['user_id'] ) ) {
+
+		$user_id = $filter['user_id'];
+
+	} else {
+
+		$user_id = bp_displayed_user_id() ? bp_displayed_user_id() : bp_loggedin_user_id();
+	}
+
+	$friends = friends_get_friend_user_ids( $user_id );
+
+	if ( empty( $friends ) ) {
+
+		$friends = array( 0 );
+	}
+
+	if ( bp_is_activity_directory() ) {
+
+		$muting_ids = Mute::get_muting( $user_id );
+
+		$friends = array_diff( $friends, $muting_ids );
+	}
+
+	if ( empty( $friends ) ) {
+
+		$friends = array( 0 );
+	}
+
+	$retval = array(
+		'relation' => 'AND',
+		array(
+			'column' => 'user_id',
+			'compare' => 'IN',
+			'value' => (array) $friends
+		),
+		array(
+			'column' => 'hide_sitewide',
+			'value' => 0
+		),
+		'override' => array(
+			'filter' => array( 'user_id' => 0 ),
+			'show_hidden' => true
+		)
+	);
+
+	return $retval;
+}
+add_filter( 'bp_activity_set_friends_scope_args', 'bp_mute_friends_activity_scope', 12, 2 );
 
 /**
  * Filter the members loop to show muted friends.
