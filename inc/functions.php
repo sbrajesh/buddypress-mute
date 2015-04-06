@@ -287,11 +287,11 @@ function bp_mute_filter_members_friends( $r ) {
 
 	if ( bp_is_current_component( 'mute' ) && bp_is_current_action( 'friends' ) ) {
 
-		$ids = Mute::get_muting( bp_loggedin_user_id() );
+		$ids = Mute::get_muting( bp_displayed_user_id() );
 
 		foreach ( $ids as $id ) {
 
-			$result = friends_check_friendship( bp_loggedin_user_id(), $id );
+			$result = friends_check_friendship( bp_displayed_user_id(), $id );
 
 			if ( $result )
 				$array[] = $id;
@@ -320,7 +320,7 @@ function bp_mute_filter_members_all( $r ) {
 
 	if ( bp_is_current_component( 'mute' ) && bp_is_current_action( 'all' ) ) {
 
-		$ids = Mute::get_muting( bp_loggedin_user_id() );
+		$ids = Mute::get_muting( bp_displayed_user_id() );
 
 		if ( empty( $ids ) ) {
 
