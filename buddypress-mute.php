@@ -29,6 +29,10 @@ if ( ! defined( 'ABSPATH' ) )
  */
 function bp_mute_init() {
 
+	if ( ! bp_is_active( 'activity' ) ) {
+		return;
+	}
+
 	require dirname( __FILE__ ) . '/inc/loader.php';
 }
 add_action( 'bp_include', 'bp_mute_init' );
@@ -42,6 +46,10 @@ function bp_mute_js() {
 
 	if ( ! bp_mute_buddypress_exists() )
 		return;
+
+	if ( ! bp_is_active( 'activity' ) ) {
+		return;
+	}
 
 	if ( ! is_user_logged_in() )
 		return;
