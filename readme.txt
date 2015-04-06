@@ -4,7 +4,7 @@ Donate link: https://www.bhf.org.uk/get-involved/donate
 Tags: buddypress, mute, activity, users, friends
 Requires at least: 3.5
 Tested up to: 4.1.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -44,6 +44,9 @@ There's no way of knowing if you've been muted.
 If you think you've spotted a bug, please let me know by opening an issue on the [BuddyPress Mute](https://github.com/henrywright/buddypress-mute) GitHub page.
 
 == Changelog ==
+
+= 1.0.1 =
+* Bug fixes.
 
 = 1.0.0 =
 * Initial release.
