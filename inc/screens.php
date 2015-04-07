@@ -48,6 +48,10 @@ function bp_mute_friends_screen() {
  * Filter the template location.
  *
  * @since 1.0.0
+ *
+ * @param string $found_template Located template path.
+ * @param array $templates Array of templates to attempt to load.
+ * @param string
  */
 function bp_mute_load_template_filter( $found_template, $templates ) {
 
@@ -77,6 +81,8 @@ add_filter( 'bp_located_template', 'bp_mute_load_template_filter', 10, 2 );
  * Get a template directory location.
  *
  * @since 1.0.0
+ *
+ * @return string
  */
 function bp_mute_get_template_directory() {
 

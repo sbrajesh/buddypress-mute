@@ -14,6 +14,9 @@ if ( ! defined( 'ABSPATH' ) )
  * Create a button.
  *
  * @since 1.0.0
+ *
+ * @param int $muted_id The ID of the muted user.
+ * @return string
  */
 function bp_mute_get_button( $muted_id ) {
 
@@ -112,7 +115,7 @@ add_action( 'bp_core_deleted_account', 'bp_mute_delete' );
 /**
  * Start muting a user.
  *
- * Hooked to bp_actions, this function is used when js is disabled.
+ * This function is used when js is disabled.
  *
  * @since 1.0.0
  */
@@ -153,7 +156,7 @@ add_action( 'bp_actions', 'bp_mute_action_start' );
 /**
  * Stop muting a user.
  *
- * Hooked to bp_actions, this function is used when js is disabled.
+ * This function is used when js is disabled.
  *
  * @since 1.0.0
  */
@@ -286,6 +289,9 @@ add_filter( 'bp_activity_set_friends_scope_args', 'bp_mute_friends_activity_scop
  * Filter the members loop to show muted friends.
  *
  * @since 1.0.0
+ *
+ * @param array $r Arguments for changing the contents of the loop.
+ * @return array
  */
 function bp_mute_filter_members_friends( $r ) {
 
@@ -323,6 +329,9 @@ add_filter( 'bp_after_has_members_parse_args', 'bp_mute_filter_members_friends' 
  * Filter the members loop to show all muted users.
  *
  * @since 1.0.0
+ *
+ * @param array $r Arguments for changing the contents of the loop.
+ * @return array
  */
 function bp_mute_filter_members_all( $r ) {
 
