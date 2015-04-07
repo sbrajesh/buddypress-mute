@@ -8,13 +8,13 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-Allow members to mute their friends and shed unwanted items from their BuddyPress site-wide activity stream.
+Allow members to mute their friends and shed unwanted items from their BuddyPress activity stream.
 
 == Description ==
 
 There are many reasons why you might want to mute a person. A friend could be posting too many promotional messages or a former colleague might be regularly talking about work projects. In many of these situations, blocking or unfriending aren't appropriate solutions because you don't want to dissociate yourself from that person.
 
-BuddyPress Mute outputs a button next to each member which, when clicked, results in that member being muted. Members can be unmuted at any time. The button uses Ajax to make the muting and unmuting process seamless.
+BuddyPress Mute outputs a button next to each member which, when clicked, results in that member's activity items being removed from the site-wide activity stream. Members can be unmuted at any time. The button uses Ajax to make the muting and unmuting process seamless.
 
 == Installation ==
 
