@@ -54,7 +54,7 @@ function bp_mute_js() {
 	if ( ! is_user_logged_in() )
 		return;
 
-	if ( bp_is_user() || bp_is_members_directory() || bp_is_group_members() ) {
+	if ( bp_is_user() || bp_is_members_directory() ) {
 
 		wp_enqueue_script( 'bp-mute-js', plugins_url( 'js/script.min.js', __FILE__ ), array( 'jquery' ), NULL, true );
 
