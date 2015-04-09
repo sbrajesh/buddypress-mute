@@ -27,6 +27,10 @@ BuddyPress Mute outputs a button next to each member which, when clicked, result
 
 Yes.
 
+= Which activity streams are muted activity items removed from? =
+
+Muted activity items are removed from the site-wide activity stream if the scope is set to friends or the entire site. To avoid disclosing who is muting who, activity streams elsewhere remain unfiltered.
+
 = Will I continue to get notifications from people after I mute them? =
 
 Yes. If for instance a person you are muting decides to send you a private message, then you will receive a notification.
