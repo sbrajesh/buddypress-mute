@@ -23,6 +23,10 @@ BuddyPress Mute outputs a button next to each member which, when clicked, result
 
 == Frequently Asked Questions ==
 
+= Is the plugin network compatible? =
+
+Yes.
+
 = Will I continue to get notifications from people after I mute them? =
 
 Yes. If for instance a person you are muting decides to send you a private message, then you will receive a notification.
