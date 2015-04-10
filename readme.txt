@@ -51,6 +51,10 @@ There's no way of knowing if you've been muted.
 
 If you think you've spotted a bug, please let me know by opening an issue on the [BuddyPress Mute](https://github.com/henrywright/buddypress-mute) GitHub page.
 
+== Screenshots ==
+
+1. Mute buttons are shown next to each member in the loop and on each member's profile page.
+
 == Changelog ==
 
 = 1.0.1 =

@@ -4,6 +4,10 @@ Muting a user results in that member's activity items being removed from the sit
 
 There are many reasons why you might want to mute a person. A friend could be posting too many promotional messages or a former colleague might be regularly talking about work projects. In many of these situations, blocking or unfriending aren't appropriate solutions because you don't want to dissociate yourself from that person.
 
+## Screenshots
+
+![Mute buttons are shown next to each member in the loop and on each member's profile page](https://raw.githubusercontent.com/henrywright/buddypress-mute/master/screenshot-1.png)
+
 ## Requirements
 
  - WordPress 3.5 or higher
