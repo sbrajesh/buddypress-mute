@@ -53,7 +53,7 @@ If you think you've spotted a bug, please let me know by opening an issue on the
 
 == Screenshots ==
 
-1. Mute buttons are shown next to each member in the loop and on each member's profile page.
+1. A mute button is displayed next to each member in the loop (see screenshot) and on each member's profile page.
 
 == Changelog ==
 

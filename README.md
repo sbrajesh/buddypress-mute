@@ -6,7 +6,9 @@ There are many reasons why you might want to mute a person. A friend could be po
 
 ## Screenshots
 
-![Mute buttons are shown next to each member in the loop and on each member's profile page](https://raw.githubusercontent.com/henrywright/buddypress-mute/master/screenshot-1.png)
+![A screenshot showing the mute button next to each member in the loop](https://raw.githubusercontent.com/henrywright/buddypress-mute/master/screenshot-1.png)
+
+A mute button is displayed next to each member in the loop (see screenshot) and on each member's profile page.
 
 ## Requirements
 
