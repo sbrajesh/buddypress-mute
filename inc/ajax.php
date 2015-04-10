@@ -41,6 +41,13 @@ function bp_mute_ajax_start() {
 		}
 	}
 
+	$count = Mute::get_count( bp_displayed_user_id() );
+
+	if ( $count )
+		$response['count'] = $count;
+	else
+		$response['count'] = 0;
+
 	wp_send_json( $response );
 }
 add_action( 'wp_ajax_mute', 'bp_mute_ajax_start' );
@@ -75,6 +82,13 @@ function bp_mute_ajax_stop() {
 			$response['status'] = 'success';
 		}
 	}
+
+	$count = Mute::get_count( bp_displayed_user_id() );
+
+	if ( $count )
+		$response['count'] = $count;
+	else
+		$response['count'] = 0;
 
 	wp_send_json( $response );
 }
