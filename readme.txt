@@ -37,11 +37,11 @@ Yes. If for instance a person you are muting decides to send you a private messa
 
 = How can I mute a person? =
 
-Go to the profile page of the person you wish to mute and look for the Mute button.
+Go to the profile page of the person you wish to mute and look for the Mute button. A mute button is also displayed beside each member in the loop.
 
 = How can I unmute a person? =
 
-Go to the profile page of the person you wish to unmute and look for the Unmute button.
+Go to the profile page of the person you wish to unmute and look for the Unmute button. An unmute button is also displayed beside each member in the loop.
 
 = How do I know if I've been muted? =
 
@@ -53,7 +53,7 @@ If you think you've spotted a bug, please let me know by opening an issue on the
 
 == Screenshots ==
 
-1. A mute button is displayed next to each member in the loop (see screenshot) and on each member's profile page.
+1. A screenshot showing the mute button beside each member in the loop
 
 == Changelog ==
 
