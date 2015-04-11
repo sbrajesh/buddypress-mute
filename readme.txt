@@ -57,6 +57,10 @@ If you think you've spotted a bug, please let me know by opening an issue on the
 
 == Changelog ==
 
+= 1.0.2 =
+* Adjust the count in the Mute nav item after Ajax calls.
+* Remove the button from the group members loop.
+
 = 1.0.1 =
 * Bug fixes.
 
