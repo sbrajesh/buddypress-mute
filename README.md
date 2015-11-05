@@ -8,8 +8,6 @@ There are many reasons why you might want to mute a person. A friend could be po
 
 ![A screenshot showing the mute button beside each member in the loop](https://raw.githubusercontent.com/henrywright/buddypress-mute/master/screenshot-1.png)
 
-A screenshot showing the mute button beside each member in the loop.
-
 ## Requirements
 
  - WordPress 3.5 or higher
