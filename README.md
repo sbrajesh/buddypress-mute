@@ -2,7 +2,7 @@
 
 Muting a user results in that member's activity items being removed from the site-wide activity stream. Members can be unmuted at any time.
 
-There are many reasons why you might want to mute a person. A friend could be posting too many promotional messages or a former colleague might be regularly talking about work projects. In many of these situations, blocking or unfriending aren't appropriate solutions because you don't want to dissociate yourself from that person.
+You might want to mute a friend because they are posting too many promotional messages or a former colleague because they are regularly talking about work projects. In many situations, blocking or unfriending a person isn't an appropriate solutions because you don't want to dissociate yourself from that person.
 
 ## Screenshots
 
