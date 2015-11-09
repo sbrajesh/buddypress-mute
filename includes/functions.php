@@ -290,7 +290,7 @@ function bp_mute_friends_activity_scope( $retval = array(), $filter = array() ) 
 			'column' => 'hide_sitewide',
 			'value'  => 0
 		),
-		'override'        => array(
+		'override' => array(
 			'filter'      => array( 'user_id' => 0 ),
 			'show_hidden' => true
 		)
