@@ -72,6 +72,19 @@ function bp_mute_add_member_dir_button() {
 add_action( 'bp_directory_members_actions', 'bp_mute_add_member_dir_button', 99 );
 
 /**
+ * Output a button for each member in the group.
+ *
+ * @since 1.0.3
+ */
+function bp_mute_add_group_member_dir_button() {
+
+	global $members_template;
+
+	echo bp_mute_get_button( $members_template->member->user_id );
+}
+add_action( 'bp_group_members_list_item_action', 'bp_mute_add_group_member_dir_button', 99 );
+
+/**
  * Delete all mute records relating to a given user.
  *
  * @since 1.1.0
