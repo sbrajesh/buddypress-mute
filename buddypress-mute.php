@@ -38,6 +38,21 @@ function bp_mute_init() {
 add_action( 'bp_include', 'bp_mute_init' );
 
 /**
+ * Load the component into the $bp global.
+ *
+ * @since 1.0.0
+ */
+function bp_mute_load_component() {
+
+	if ( ! bp_is_active( 'activity' ) ) {
+		return;
+	}
+
+	buddypress()->mute = new Mute_Component;
+}
+add_action( 'bp_loaded', 'bp_mute_load_component' );
+
+/**
  * Enqueue the js.
  *
  * @since 1.0.0

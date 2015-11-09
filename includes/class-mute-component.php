@@ -1,9 +1,9 @@
 <?php
 /**
- * Component loader
+ * Component class definition
  *
  * @package BuddyPress Mute
- * @subpackage Loader
+ * @subpackage Classes
  */
 
 // Exit if accessed directly.
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
- * Create a BuddyPress Mute component.
+ * Create a component.
  *
  * @since 1.0.0
  */
@@ -192,14 +192,3 @@ class Mute_Component extends BP_Component {
 		parent::setup_admin_bar( $wp_admin_nav );
 	}
 }
-
-/**
- * Load the component into the $bp global.
- *
- * @since 1.0.0
- */
-function bp_mute_load_component() {
-
-	buddypress()->mute = new Mute_Component;
-}
-add_action( 'bp_loaded', 'bp_mute_load_component' );
