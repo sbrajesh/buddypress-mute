@@ -33,7 +33,7 @@ function bp_mute_init() {
 		return;
 	}
 
-	require dirname( __FILE__ ) . '/includes/loader.php';
+	require dirname( __FILE__ ) . '/includes/class-mute-component.php';
 }
 add_action( 'bp_include', 'bp_mute_init' );
 
