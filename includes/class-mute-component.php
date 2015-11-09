@@ -1,6 +1,6 @@
 <?php
 /**
- * Component class definition
+ * Mute_Component class definition
  *
  * @package BuddyPress Mute
  * @subpackage Classes
@@ -40,7 +40,7 @@ class Mute_Component extends BP_Component {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param array $includes See BP_Component::includes() for a description.
+	 * @param array $includes See BP_Component::includes().
 	 */
 	function includes( $includes = array() ) {
 
@@ -49,7 +49,6 @@ class Mute_Component extends BP_Component {
 			'includes/functions.php',
 			'includes/screens.php'
 		);
-
 		parent::includes( $includes );
 	}
 
@@ -59,7 +58,7 @@ class Mute_Component extends BP_Component {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param array $args See BP_Component::setup_globals() for a description.
+	 * @param array $args See BP_Component::setup_globals().
 	 */
 	function setup_globals( $args = array() ) {
 
@@ -67,17 +66,12 @@ class Mute_Component extends BP_Component {
 			define( 'BP_MUTE_SLUG', 'mute' );
 		}
 
-		$global_tables = array(
-			'table_name' => buddypress()->table_prefix . 'bp_mute'
-		);
-
-		$globals = array(
+		$args = array(
 			'slug'                  => BP_MUTE_SLUG,
-			'notification_callback' => 'bp_mute_format_notifications',
-			'global_tables'         => $global_tables
+			'global_tables'         => array( 'table_name' => buddypress()->table_prefix . 'bp_mute' ),
+			'notification_callback' => 'bp_mute_format_notifications'
 		);
-
-		parent::setup_globals( $globals );
+		parent::setup_globals( $args );
 	}
 
 	/**
@@ -86,50 +80,31 @@ class Mute_Component extends BP_Component {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param array $main_nav Optional. See BP_Component::setup_nav() for a description.
-	 * @param array $sub_nav Optional. See BP_Component::setup_nav() for a description.
+	 * @param array $main_nav Optional. See BP_Component::setup_nav().
+	 * @param array $sub_nav Optional. See BP_Component::setup_nav().
 	 */
 	function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
-		if ( bp_is_user() && bp_user_has_access() ) {
+		$count = Mute::get_count( bp_displayed_user_id() );
 
-			$count = Mute::get_count( bp_displayed_user_id() );
-
-			$class = ( 0 === $count ) ? 'no-count' : 'count';
-
-			$nav_name = sprintf( __( 'Mute <span class="%s">%s</span>', 'buddypress-mute' ), esc_attr( $class ), number_format_i18n( $count ) );
-
-		} else {
-
-			$nav_name = __( 'Mute', 'buddypress-mute' );
-		}
+		$class = ( 0 === $count ) ? 'no-count' : 'count';
 
 		$main_nav = array(
-			'name'                    => $nav_name,
+			'name'                    => sprintf( __( 'Mute <span class="%s">%s</span>', 'buddypress-mute' ), esc_attr( $class ), number_format_i18n( $count ) ),
 			'slug'                    => $this->slug,
-			'default_subnav_slug'     => 'all',
-			'position'                => 80,
 			'item_css_id'             => $this->id,
+			'position'                => 80,
 			'show_for_displayed_user' => bp_core_can_edit_settings(),
-			'screen_function'         => 'bp_mute_all_screen'
+			'screen_function'         => 'bp_mute_all_screen',
+			'default_subnav_slug'     => 'all'
 		);
-
-		if ( bp_displayed_user_domain() ) {
-			$user_domain = bp_displayed_user_domain();
-		} elseif ( bp_loggedin_user_domain() ) {
-			$user_domain = bp_loggedin_user_domain();
-		} else {
-			return;
-		}
-
-		$mute_link = trailingslashit( $user_domain . $this->slug );
 
 		$sub_nav[] = array(
 			'name'            => __( 'All', 'buddypress-mute' ),
 			'slug'            => 'all',
-			'parent_slug'     => $this->slug,
-			'parent_url'      => $mute_link,
 			'position'        => 10,
+			'parent_slug'     => $this->slug,
+			'parent_url'      => trailingslashit( bp_displayed_user_domain() . $this->slug ),
 			'user_has_access' => bp_core_can_edit_settings(),
 			'screen_function' => 'bp_mute_all_screen'
 		);
@@ -139,24 +114,23 @@ class Mute_Component extends BP_Component {
 			$sub_nav[] = array(
 				'name'            => __( 'Friends', 'buddypress-mute' ),
 				'slug'            => 'friends',
-				'parent_slug'     => $this->slug,
-				'parent_url'      => $mute_link,
 				'position'        => 20,
+				'parent_slug'     => $this->slug,
+				'parent_url'      => trailingslashit( bp_displayed_user_domain() . $this->slug ),
 				'user_has_access' => bp_core_can_edit_settings(),
 				'screen_function' => 'bp_mute_friends_screen'
 			);
 		}
-
 		parent::setup_nav( $main_nav, $sub_nav );
 	}
 
 	/**
-	 * Set up component in WordPress admin bar.
+	 * Set up component in admin bar.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param array $wp_admin_nav See BP_Component::setup_admin_bar() for a description.
+	 * @param array $wp_admin_nav See BP_Component::setup_admin_bar().
 	 */
 	function setup_admin_bar( $wp_admin_nav = array() ) {
 
@@ -187,7 +161,6 @@ class Mute_Component extends BP_Component {
 				'href'   => trailingslashit( trailingslashit( bp_loggedin_user_domain() . $this->slug ) . 'friends' ),
 			);
 		}
-
 		parent::setup_admin_bar( $wp_admin_nav );
 	}
 }
