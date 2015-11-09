@@ -86,15 +86,11 @@ add_action( 'delete_user', 'bp_mute_delete' );
 add_action( 'bp_core_deleted_account', 'bp_mute_delete' );
 
 /**
- * Start muting a user.
- *
- * This function is used when js is disabled.
+ * Start muting a user if JavaScript is disabled.
  *
  * @since 1.0.0
  */
 function bp_mute_action_start() {
-
-	global $bp;
 
 	if ( ! bp_is_current_component( 'mute' ) || ! bp_is_current_action( 'start' ) ) {
 		return;
@@ -106,36 +102,30 @@ function bp_mute_action_start() {
 
 	if ( $obj->id ) {
 
-		bp_core_add_message( sprintf( __( 'You are already muting %s.', 'buddypress-mute' ), bp_get_displayed_user_fullname() ), 'error' );
+		$message = sprintf( __( 'You are already muting %s.', 'buddypress-mute' ), bp_get_displayed_user_fullname() );
+		$status = 'error';
 
 	} else {
 
-		$result = $obj->save();
-
-		if ( $result === false ) {
-
-			bp_core_add_message( __( 'An error occurred, please try again.', 'buddypress-mute' ), 'error' );
-
+		if ( $obj->save() === false ) {
+			$message = __( 'This user could not be muted. Try again.', 'buddypress-mute' );
+			$status = 'error';
 		} else {
-
-			bp_core_add_message( sprintf( __( 'You are now muting %s.', 'buddypress-mute' ), bp_get_displayed_user_fullname() ) );
+			$message = sprintf( __( 'You are now muting %s.', 'buddypress-mute' ), bp_get_displayed_user_fullname() );
+			$status = 'success';
 		}
 	}
-
+	bp_core_add_message( $message, $status );
 	bp_core_redirect( wp_get_referer() );
 }
 add_action( 'bp_actions', 'bp_mute_action_start' );
 
 /**
- * Stop muting a user.
- *
- * This function is used when js is disabled.
+ * Stop muting a user if JavaScript is disabled.
  *
  * @since 1.0.0
  */
 function bp_mute_action_stop() {
-
-	global $bp;
 
 	if ( ! bp_is_current_component( 'mute' ) || ! bp_is_current_action( 'stop' ) ) {
 		return;
@@ -147,28 +137,26 @@ function bp_mute_action_stop() {
 
 	if ( ! $obj->id ) {
 
-		bp_core_add_message( sprintf( __( 'You are not muting %s.', 'buddypress-mute' ), bp_get_displayed_user_fullname() ), 'error' );
+		$message = sprintf( __( 'You are not muting %s.', 'buddypress-mute' ), bp_get_displayed_user_fullname() );
+		$status = 'error';
 
 	} else {
 
-		$result = $obj->delete();
-
-		if ( $result === false ) {
-
-			bp_core_add_message( __( 'An error occurred, please try again.', 'buddypress-mute' ), 'error' );
-
+		if ( $obj->delete() === false ) {
+			$message = __( 'This user could not be unmuted. Try again.', 'buddypress-mute' );
+			$status = 'error';
 		} else {
-
-			bp_core_add_message( sprintf( __( 'You have successfully unmuted %s.', 'buddypress-mute' ), bp_get_displayed_user_fullname() ) );
+			$message = sprintf( __( 'You have successfully unmuted %s.', 'buddypress-mute' ), bp_get_displayed_user_fullname() );
+			$status = 'success';
 		}
 	}
-
+	bp_core_add_message( $message, $status );
 	bp_core_redirect( wp_get_referer() );
 }
 add_action( 'bp_actions', 'bp_mute_action_stop' );
 
 /**
- * Start muting a given user.
+ * Start muting a user if JavaScript is enabled.
  *
  * @since 1.0.0
  */
@@ -176,41 +164,26 @@ function bp_mute_ajax_start() {
 
 	check_ajax_referer( 'mute-nonce', 'start' );
 
-	$muted_id = (int) $_POST['uid'];
+	$mute = new Mute( (int) $_POST['uid'], bp_loggedin_user_id() );
 
-	$obj = new Mute( $muted_id, bp_loggedin_user_id() );
-
-	if ( $obj->id ) {
+	if ( $mute->id ) {
 
 		$response['status'] = 'failure';
 
 	} else {
 
-		$result = $obj->save();
-
-		if ( $result === false ) {
-
-			$response['status'] = 'failure';
-
-		} else {
-
-			$response['status'] = 'success';
-		}
+		$response['status'] = $mute->save() ? 'success' : 'failure';
 	}
 
 	$count = Mute::get_count( bp_displayed_user_id() );
-
-	if ( $count )
-		$response['count'] = $count;
-	else
-		$response['count'] = 0;
+	$response['count'] = $count ? $count : 0;
 
 	wp_send_json( $response );
 }
 add_action( 'wp_ajax_mute', 'bp_mute_ajax_start' );
 
 /**
- * Stop muting a given user.
+ * Stop muting a user if JavaScript is enabled.
  *
  * @since 1.0.0
  */
@@ -218,34 +191,19 @@ function bp_mute_ajax_stop() {
 
 	check_ajax_referer( 'unmute-nonce', 'stop' );
 
-	$muted_id = (int) $_POST['uid'];
+	$mute = new Mute( (int) $_POST['uid'], bp_loggedin_user_id() );
 
-	$obj = new Mute( $muted_id, bp_loggedin_user_id() );
-
-	if ( ! $obj->id ) {
+	if ( ! $mute->id ) {
 
 		$response['status'] = 'failure';
 
 	} else {
 
-		$result = $obj->delete();
-
-		if ( $result === false ) {
-
-			$response['status'] = 'failure';
-
-		} else {
-
-			$response['status'] = 'success';
-		}
+		$response['status'] = $mute->delete() ? 'success' : 'failure';
 	}
 
 	$count = Mute::get_count( bp_displayed_user_id() );
-
-	if ( $count )
-		$response['count'] = $count;
-	else
-		$response['count'] = 0;
+	$response['count'] = $count ? $count : 0;
 
 	wp_send_json( $response );
 }
