@@ -49,7 +49,7 @@ There's no way of knowing if you've been muted.
 
 = Where should I submit bug reports? =
 
-If you think you've spotted a bug, please let me know by opening an issue on the [BuddyPress Mute](https://github.com/henrywright/buddypress-mute) GitHub page.
+If you think you've spotted a bug, please open an issue on the BuddyPress Mute [Issues](https://github.com/henrywright/buddypress-mute/issues) page.
 
 == Screenshots ==
 
