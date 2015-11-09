@@ -63,8 +63,8 @@ function bp_mute_js() {
 			'mute',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'start' => wp_create_nonce( 'mute-nonce' ),
-				'stop' => wp_create_nonce( 'unmute-nonce' )
+				'start'    => wp_create_nonce( 'mute-nonce' ),
+				'stop'     => wp_create_nonce( 'unmute-nonce' )
 			)
 		);
 	}
