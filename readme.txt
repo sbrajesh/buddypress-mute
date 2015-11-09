@@ -53,7 +53,7 @@ If you think you've spotted a bug, please open an issue on the BuddyPress Mute [
 
 == Screenshots ==
 
-1. A screenshot showing the mute button beside each member in the loop
+1. A screenshot showing the mute button next to each member in the loop
 
 == Changelog ==
 
