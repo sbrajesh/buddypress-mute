@@ -35,7 +35,7 @@ class Mute_Component extends BP_Component {
 	}
 
 	/**
-	 * Set up the $includes array.
+	 * Include the required files.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -44,16 +44,18 @@ class Mute_Component extends BP_Component {
 	 */
 	function includes( $includes = array() ) {
 
+		$dir = trailingslashit( 'includes' );
+
 		$includes = array(
-			'includes/class-mute.php',
-			'includes/functions.php',
-			'includes/screens.php'
+			$dir . 'class-mute.php',
+			$dir . 'functions.php',
+			$dir . 'screens.php'
 		);
 		parent::includes( $includes );
 	}
 
 	/**
-	 * Set up component global data.
+	 * Set up global data.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -75,7 +77,7 @@ class Mute_Component extends BP_Component {
 	}
 
 	/**
-	 * Set up component navigation.
+	 * Set up the navigation.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -87,16 +89,16 @@ class Mute_Component extends BP_Component {
 
 		$count = Mute::get_count( bp_displayed_user_id() );
 
-		$class = ( 0 === $count ) ? 'no-count' : 'count';
+		$class = ( $count === 0 ) ? 'no-count' : 'count';
 
 		$main_nav = array(
 			'name'                    => sprintf( __( 'Mute <span class="%s">%s</span>', 'buddypress-mute' ), esc_attr( $class ), number_format_i18n( $count ) ),
+			'position'                => 80,
+			'default_subnav_slug'     => 'all',
 			'slug'                    => $this->slug,
 			'item_css_id'             => $this->id,
-			'position'                => 80,
 			'show_for_displayed_user' => bp_core_can_edit_settings(),
-			'screen_function'         => 'bp_mute_all_screen',
-			'default_subnav_slug'     => 'all'
+			'screen_function'         => 'bp_mute_all_screen'
 		);
 
 		$sub_nav[] = array(
