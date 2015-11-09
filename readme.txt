@@ -62,7 +62,7 @@ If you think you've spotted a bug, please open an issue on the BuddyPress Mute [
 * Remove the button from the group members loop.
 
 = 1.0.1 =
-* Bug fixes.
+* Fix bugs.
 
 = 1.0.0 =
 * Initial release.
