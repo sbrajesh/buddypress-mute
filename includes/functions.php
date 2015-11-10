@@ -250,65 +250,61 @@ function bp_mute_site_activity_filter( $args ) {
 add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_site_activity_filter' );
 
 /**
- * Filter My Friends in the activity directory.
+ * Filter activity stream if scope is 'friends'.
  *
  * @since 1.0.1
  *
- * @param array $retval Empty array by default.
- * @param array $filter Current activity arguments.
+ * @param array $retval The activity query clauses.
+ * @param array $filter The current activity arguments.
  * @return array
  */
 function bp_mute_friends_activity_scope( $retval = array(), $filter = array() ) {
 
-	if ( ! bp_is_active( 'friends' ) ) {
-		return $retval;
+	// Bail if not on the expected page.
+	if ( ! bp_is_activity_directory() ) {
+		if ( ! bp_is_my_profile() ) {
+			return $retval;
+		}
 	}
 
-	if ( ! empty( $filter['user_id'] ) ) {
+	// Get the ID of the user.
+	$user_id = bp_loggedin_user_id();
 
-		$user_id = $filter['user_id'];
+	// Get an array of friends.
+	$friend_ids = friends_get_friend_user_ids( $user_id );
 
-	} else {
+	// Get an array of muted users.
+	$muted_ids = Mute::get_muting( $user_id );
 
-		$user_id = bp_displayed_user_id() ? bp_displayed_user_id() : bp_loggedin_user_id();
+	if ( empty( $friend_ids ) ) {
+		$friend_ids = array( 0 );
 	}
 
-	$friends = friends_get_friend_user_ids( $user_id );
+	// Get non-muted friends.
+	$friend_ids = array_diff( $friend_ids, $muted_ids );
 
-	if ( empty( $friends ) ) {
-
-		$friends = array( 0 );
-	}
-
-	if ( bp_is_activity_directory() ) {
-
-		$muting_ids = Mute::get_muting( $user_id );
-
-		$friends = array_diff( $friends, $muting_ids );
-	}
-
-	if ( empty( $friends ) ) {
-
-		$friends = array( 0 );
+	if ( empty( $friend_ids ) ) {
+		$friend_ids = array( 0 );
 	}
 
 	$retval = array(
 		'relation' => 'AND',
-		array(
-			'column'  => 'user_id',
-			'compare' => 'IN',
-			'value'   => (array) $friends
-		),
-		array(
-			'column' => 'hide_sitewide',
-			'value'  => 0
-		),
 		'override' => array(
 			'filter'      => array( 'user_id' => 0 ),
 			'show_hidden' => true
 		)
 	);
 
+	$retval[] = array(
+		'compare' => 'IN',
+		'column'  => 'user_id',
+		'value'   => (array) $friend_ids
+	);
+
+	$retval[] = array(
+		'column' => 'hide_sitewide',
+		'value'  => 0
+	);
 	return $retval;
 }
 add_filter( 'bp_activity_set_friends_scope_args', 'bp_mute_friends_activity_scope', 12, 2 );
