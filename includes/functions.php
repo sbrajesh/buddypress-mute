@@ -223,31 +223,35 @@ function bp_mute_ajax_stop() {
 add_action( 'wp_ajax_unmute', 'bp_mute_ajax_stop' );
 
 /**
- * Filter All Members in the activity directory.
+ * Filter activity stream if scope isn't set.
  *
- * @since 1.0.1
+ * @since 1.0.3
  *
- * @param array $args Arguments passed from bp_parse_args().
+ * @param array $r The arguments.
  * @return array
  */
-function bp_mute_site_activity_filter( $args ) {
+function bp_mute_activity_filter( $r ) {
 
-	if ( ! is_user_logged_in() || ! bp_is_activity_directory() || ! empty( $args['scope'] ) ) {
-		return $args;
+	if ( ! is_user_logged_in() ) {
+		return $r;
 	}
 
-	$ids = Mute::get_muting( bp_loggedin_user_id() );
+	if ( ! bp_is_activity_directory() ) {
+		return $r;
+	}
 
-	$query_args = array(
-		'exclude' => $ids,
-		'fields' => 'ID'
+	$filter_query[] = array(
+		array(
+			'compare' => 'NOT IN',
+			'column'  => 'user_id',
+			'value'   =>  (array) Mute::get_muting( bp_loggedin_user_id() )
+		)
 	);
+	$r['filter_query'] = $filter_query;
 
-	$args['user_id'] = get_users( $query_args );
-
-	return $args;
+	return $r;
 }
-add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_site_activity_filter' );
+add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_activity_filter' );
 
 /**
  * Filter activity stream if scope is 'friends'.
