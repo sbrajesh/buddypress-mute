@@ -12,7 +12,7 @@ Allow members to mute their friends and shed unwanted items from their BuddyPres
 
 == Description ==
 
-Muting a user results in that member's activity items being removed from the site-wide activity stream. Members can be unmuted at any time.
+Muting a person results in that person's activity items being removed from the activity stream. Members can be unmuted at any time.
 
 You might want to mute a friend because they are posting too many promotional messages or a former colleague because they are regularly talking about work projects. In many situations, blocking or unfriending a person isn't an appropriate solutions because you don't want to dissociate yourself from that person.
 
@@ -27,21 +27,17 @@ You might want to mute a friend because they are posting too many promotional me
 
 Yes.
 
-= Which activity streams are muted activity items removed from? =
-
-Muted activity items are removed from the site-wide activity stream if the scope is set to friends or the entire site. To avoid disclosing who is muting who, activity streams elsewhere remain unfiltered.
-
 = Will I continue to get notifications from people after I mute them? =
 
 Yes. If for instance a person you are muting decides to send you a private message, then you will receive a notification.
 
 = How can I mute a person? =
 
-Go to the profile page of the person you wish to mute and look for the Mute button. A mute button is also displayed beside each member in the loop.
+Go to the profile page of the person you wish to mute and look for the Mute button. A button is also displayed beside each member in the loop.
 
 = How can I unmute a person? =
 
-Go to the profile page of the person you wish to unmute and look for the Unmute button. An unmute button is also displayed beside each member in the loop.
+Go to the profile page of the person you wish to unmute and look for the Unmute button. A button is also displayed beside each member in the loop.
 
 = How do I know if I've been muted? =
 
