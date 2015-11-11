@@ -53,6 +53,12 @@ If you think you've spotted a bug, please open an issue on the BuddyPress Mute [
 
 == Changelog ==
 
+= 1.0.3 =
+* Output a button next to each group member.
+* Filter the site activity stream if scope is "groups".
+* Filter the user activity stream if scope is "groups" or "friends".
+* Filter the group activity stream.
+
 = 1.0.2 =
 * Adjust the count in the Mute nav item after Ajax calls.
 * Remove the button from the group members loop.
