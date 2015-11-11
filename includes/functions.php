@@ -223,14 +223,14 @@ function bp_mute_ajax_stop() {
 add_action( 'wp_ajax_unmute', 'bp_mute_ajax_stop' );
 
 /**
- * Filter activity stream if scope isn't set.
+ * Filter site activity stream if scope is "".
  *
  * @since 1.0.3
  *
- * @param array $r The arguments.
+ * @param array $r The activity arguments.
  * @return array
  */
-function bp_mute_activity_filter( $r ) {
+function bp_mute_filter_site_activity( $r ) {
 
 	if ( ! is_user_logged_in() ) {
 		return $r;
@@ -240,144 +240,239 @@ function bp_mute_activity_filter( $r ) {
 		return $r;
 	}
 
+	if ( $r['scope'] !== "" ) {
+		return $r;
+	}
+
+	$muted_ids = Mute::get_muting( bp_loggedin_user_id() );
+
 	$filter_query[] = array(
 		array(
-			'compare' => 'NOT IN',
-			'column'  => 'user_id',
-			'value'   =>  (array) Mute::get_muting( bp_loggedin_user_id() )
+			'column'   => 'user_id',
+			'value'    => $muted_ids,
+			'compare'  => 'NOT IN'
 		)
 	);
+	$r['filter_query'] = $filter_query;
+	return $r;
+}
+add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_filter_site_activity' );
+
+/**
+ * Filter site activity stream if scope is "friends".
+ *
+ * @since 1.0.3
+ *
+ * @param array $r The activity arguments.
+ * @return array
+ */
+function bp_mute_filter_site_activity_scope_friends( $r ) {
+
+	if ( ! is_user_logged_in() ) {
+		return $r;
+	}
+
+	if ( ! bp_is_activity_directory() ) {
+		return $r;
+	}
+
+	if ( $r['scope'] !== "friends" ) {
+		return $r;
+	}
+
+	$r['scope'] = '';
+
+	$friend_ids = friends_get_friend_user_ids( bp_loggedin_user_id() );
+
+	$muted_ids = Mute::get_muting( bp_loggedin_user_id() );
+
+	$r['user_id'] = array_diff( $friend_ids, $muted_ids );
+
+	return $r;
+}
+add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_filter_site_activity_scope_friends' );
+
+/**
+ * Filter site activity stream if scope is "groups".
+ *
+ * @since 1.0.3
+ *
+ * @param array $r The activity arguments.
+ * @return array
+ */
+function bp_mute_filter_site_activity_scope_groups( $r ) {
+
+	if ( ! is_user_logged_in() ) {
+		return $r;
+	}
+
+	if ( ! bp_is_activity_directory() ) {
+		return $r;
+	}
+
+	if ( $r['scope'] !== "groups" ) {
+		return $r;
+	}
+
+	$r['scope'] = '';
+
+	$muted_ids = Mute::get_muting( bp_loggedin_user_id() );
+
+	$groups = groups_get_user_groups( bp_loggedin_user_id() );
+
+	$filter_query[] = array(
+		array(
+			'column'   => 'component',
+			'value'    => buddypress()->groups->id
+		)
+	);
+
+	$filter_query[] = array(
+		array(
+			'column'   => 'item_id',
+			'value'    => $groups['groups'],
+			'compare'  => 'IN'
+		)
+	);
+
+	$filter_query[] = array(
+		array(
+			'column'   => 'user_id',
+			'value'    => $muted_ids,
+			'compare'  => 'NOT IN'
+		)
+	);
+
 	$r['filter_query'] = $filter_query;
 
 	return $r;
 }
-add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_activity_filter' );
+add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_filter_site_activity_scope_groups' );
 
 /**
- * Filter activity stream if scope is 'friends'.
- *
- * @since 1.0.1
- *
- * @param array $retval The activity query clauses.
- * @param array $filter The current activity arguments.
- * @return array
- */
-function bp_mute_friends_activity_scope( $retval = array(), $filter = array() ) {
-
-	// Bail if not on the expected page.
-	if ( ! bp_is_activity_directory() ) {
-		if ( ! bp_is_my_profile() ) {
-			return $retval;
-		}
-	}
-
-	// Get the ID of the user.
-	$user_id = bp_loggedin_user_id();
-
-	// Get an array of friends.
-	$friend_ids = friends_get_friend_user_ids( $user_id );
-
-	// Get an array of muted users.
-	$muted_ids = Mute::get_muting( $user_id );
-
-	if ( empty( $friend_ids ) ) {
-		$friend_ids = array( 0 );
-	}
-
-	// Get non-muted friends.
-	$friend_ids = array_diff( $friend_ids, $muted_ids );
-
-	if ( empty( $friend_ids ) ) {
-		$friend_ids = array( 0 );
-	}
-
-	$retval = array(
-		'relation' => 'AND',
-		'override' => array(
-			'filter'      => array( 'user_id' => 0 ),
-			'show_hidden' => true
-		)
-	);
-
-	$retval[] = array(
-		'compare' => 'IN',
-		'column'  => 'user_id',
-		'value'   => (array) $friend_ids
-	);
-
-	$retval[] = array(
-		'column' => 'hide_sitewide',
-		'value'  => 0
-	);
-	return $retval;
-}
-add_filter( 'bp_activity_set_friends_scope_args', 'bp_mute_friends_activity_scope', 12, 2 );
-
-/**
- * Filter activity stream if scope is 'groups'.
+ * Filter user activity stream if scope is "friends".
  *
  * @since 1.0.3
  *
- * @param array $retval The activity query clauses.
- * @param array $filter The current activity arguments.
+ * @param array $r The activity arguments.
  * @return array
  */
-function bp_mute_groups_activity_scope( $retval = array(), $filter = array() ) {
+function bp_mute_filter_user_activity_scope_friends( $r ) {
 
-	// Bail if not on the expected page.
-	if ( ! bp_is_activity_directory() ) {
-		if ( ! bp_is_my_profile() ) {
-			return $retval;
-		}
+	if ( ! bp_is_my_profile() ) {
+		return $r;
 	}
 
-	// Get the ID of the user.
-	$user_id = bp_loggedin_user_id();
-
-	// Get an array of muted users.
-	$muted_ids = Mute::get_muting( $user_id );
-
-	// Determine groups of user.
-	$groups = groups_get_user_groups( $user_id );
-	if ( empty( $groups['groups'] ) ) {
-		$groups = array( 'groups' => 0 );
+	if ( $r['scope'] !== "friends" ) {
+		return $r;
 	}
 
-	$retval = array(
-		'relation' => 'AND',
-		'override' => array(
-			'filter'      => array( 'user_id' => 0 ),
-			'show_hidden' => true
-		)
-	);
+	$r['scope'] = '';
 
-	if ( bp_is_activity_directory() ) {
-		$retval[] = array(
-			'column' => 'hide_sitewide',
-			'value'  => 0
-		);
-	}
+	$friend_ids = friends_get_friend_user_ids( bp_displayed_user_id() );
 
-	$retval[] = array(
-		'relation' => 'AND',
-		array(
-			'column' => 'component',
-			'value'  => buddypress()->groups->id
-		),
-		array(
-			'column'  => 'item_id',
-			'compare' => 'IN',
-			'value'   => (array) $groups['groups']
-		),
-		array(
-			'column'  => 'user_id',
-			'compare' => 'NOT IN',
-			'value'   => (array) $muted_ids
-		)
-	);
-	return $retval;
+	$muted_ids = Mute::get_muting( bp_displayed_user_id() );
+
+	$r['user_id'] = array_diff( $friend_ids, $muted_ids );
+
+	return $r;
 }
-add_filter( 'bp_activity_set_groups_scope_args', 'bp_mute_groups_activity_scope', 12, 2 );
+add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_filter_user_activity_scope_friends' );
+
+/**
+ * Filter user activity stream if scope is "groups".
+ *
+ * @since 1.0.3
+ *
+ * @param array $r The activity arguments.
+ * @return array
+ */
+function bp_mute_filter_user_activity_scope_groups( $r ) {
+
+	if ( ! bp_is_my_profile() ) {
+		return $r;
+	}
+
+	if ( $r['scope'] !== "groups" ) {
+		return $r;
+	}
+
+	$r['scope'] = '';
+
+	$r['user_id'] = false;
+
+	$muted_ids = Mute::get_muting( bp_displayed_user_id() );
+
+	$groups = groups_get_user_groups( bp_displayed_user_id() );
+
+	$filter_query[] = array(
+		array(
+			'column'   => 'component',
+			'value'    => buddypress()->groups->id
+		)
+	);
+
+	$filter_query[] = array(
+		array(
+			'column'   => 'item_id',
+			'value'    => $groups['groups'],
+			'compare'  => 'IN'
+		)
+	);
+
+	$filter_query[] = array(
+		array(
+			'column'   => 'user_id',
+			'value'    => $muted_ids,
+			'compare'  => 'NOT IN'
+		)
+	);
+
+	$r['filter_query'] = $filter_query;
+
+	return $r;
+}
+add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_filter_user_activity_scope_groups' );
+
+/**
+ * Filter activity stream if object is "groups".
+ *
+ * @since 1.0.3
+ *
+ * @param array $r The activity arguments.
+ * @return array
+ */
+function bp_mute_filter_activity_object_groups( $r ) {
+
+	if ( ! is_user_logged_in() ) {
+		return $r;
+	}
+
+	if ( ! bp_is_group() ) {
+		return $r;
+	}
+
+	if ( $r['object'] !== "groups" ) {
+		return $r;
+	}
+
+	$r['scope'] = '';
+
+	$muted_ids = Mute::get_muting( bp_loggedin_user_id() );
+
+	$filter_query[] = array(
+		array(
+			'column'   => 'user_id',
+			'value'    => $muted_ids,
+			'compare'  => 'NOT IN'
+		)
+	);
+
+	$r['filter_query'] = $filter_query;
+
+	return $r;
+}
+add_filter( 'bp_after_has_activities_parse_args', 'bp_mute_filter_activity_object_groups' );
 
 /**
  * Filter the members loop to show muted friends.
