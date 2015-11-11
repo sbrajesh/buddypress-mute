@@ -314,6 +314,72 @@ function bp_mute_friends_activity_scope( $retval = array(), $filter = array() ) 
 add_filter( 'bp_activity_set_friends_scope_args', 'bp_mute_friends_activity_scope', 12, 2 );
 
 /**
+ * Filter activity stream if scope is 'groups'.
+ *
+ * @since 1.0.3
+ *
+ * @param array $retval The activity query clauses.
+ * @param array $filter The current activity arguments.
+ * @return array
+ */
+function bp_mute_groups_activity_scope( $retval = array(), $filter = array() ) {
+
+	// Bail if not on the expected page.
+	if ( ! bp_is_activity_directory() ) {
+		if ( ! bp_is_my_profile() ) {
+			return $retval;
+		}
+	}
+
+	// Get the ID of the user.
+	$user_id = bp_loggedin_user_id();
+
+	// Get an array of muted users.
+	$muted_ids = Mute::get_muting( $user_id );
+
+	// Determine groups of user.
+	$groups = groups_get_user_groups( $user_id );
+	if ( empty( $groups['groups'] ) ) {
+		$groups = array( 'groups' => 0 );
+	}
+
+	$retval = array(
+		'relation' => 'AND',
+		'override' => array(
+			'filter'      => array( 'user_id' => 0 ),
+			'show_hidden' => true
+		)
+	);
+
+	if ( bp_is_activity_directory() ) {
+		$retval[] = array(
+			'column' => 'hide_sitewide',
+			'value'  => 0
+		);
+	}
+
+	$retval[] = array(
+		'relation' => 'AND',
+		array(
+			'column' => 'component',
+			'value'  => buddypress()->groups->id
+		),
+		array(
+			'column'  => 'item_id',
+			'compare' => 'IN',
+			'value'   => (array) $groups['groups']
+		),
+		array(
+			'column'  => 'user_id',
+			'compare' => 'NOT IN',
+			'value'   => (array) $muted_ids
+		)
+	);
+	return $retval;
+}
+add_filter( 'bp_activity_set_groups_scope_args', 'bp_mute_groups_activity_scope', 12, 2 );
+
+/**
  * Filter the members loop to show muted friends.
  *
  * @since 1.0.0
